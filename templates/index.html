@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+	{% if predicted %}
+	<img src="data:;base64,{{ img }}"/>
+	{% endif %}
+	<form action="{{url_for('show')}}", method="post", enctype=multipart/form-data>
+		<input type="file" class="form-control-file", name="img",style="width:200px", accept="image/*" single/>
+		<input type="submit" class="btn btn-primary" value="predict" />
+	</form>
+
+{% endblock %}
