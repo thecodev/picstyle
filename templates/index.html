@@ -9,24 +9,27 @@ $(function() {
     $('#sendbutton').click(function(e) {
     	e.preventDefault();
     	if( document.getElementById("imageinput").files.length != 0 ){
+            var checkRadio = document.querySelector('input[name="style"]:checked');
+            if(checkRadio != null){
     	
-        var form_data = new FormData($('#upload-file')[0]);
-        $.ajax({
-            type: 'POST',
-            url: '/capture',
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(result) {
-            	document.getElementById("download").style.display = "block";
-                document.getElementById('imagebox').src = 'data:image/png;base64,'+result['image'];
-                document.getElementById("download").href= "data:image/png;base64,"+result['image'];
-            },
-            error: function(result) {
-            	console.log("error")
-            }
-        });
+            var form_data = new FormData($('#upload-file')[0]);
+            $.ajax({
+                type: 'POST',
+                url: '/capture',
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(result) {
+                	document.getElementById("download").style.display = "block";
+                    document.getElementById('imagebox').src = 'data:image/png;base64,'+result['image'];
+                    document.getElementById("download").href= "data:image/png;base64,"+result['image'];
+                },
+                error: function(result) {
+                	console.log("error")
+                }
+            });
+        }
     }
     });
 });
@@ -34,14 +37,6 @@ $(function() {
 {% endblock %}
 
 {% block body %}
-	{% if predicted %}
-	<img src="data:image/png;base64,{{ img }}"/>
-	{% endif %}
-
-<!-- 	<form action="{{url_for('show')}}", method="post", enctype=multipart/form-data>
-		<input type="file" class="form-control-file", name="img",style="width:200px", accept="image/*" single/>
-		<input type="submit" class="btn btn-primary" value="predict" />
-	</form> -->
 
 <div class="box">
 	<form id="upload-file" method="post" enctype="multipart/form-data">
@@ -50,6 +45,13 @@ $(function() {
 		<hr>
 		<img id="imagebox" src="">
 		<a download="image.png" href="" id="download" style="display: none;">Download</a>
+        {% for image in modelImages %}
+            <input type="radio" name="style" id="" value="{{image}}">
+                {{image.split(".")[0]}}
+                <img src='static/images/{{image}}'/>
+                <br>
+            </input>
+        {% endfor %}
 	</form>
 </div>
 {% endblock %}
