@@ -14,7 +14,7 @@ for model in models:
 	for img in images:
 		if model.split(".")[0] in img:
 			displayModelImages.append(img)
-print(displayModelImages)
+# print(displayModelImages)
 
 def convertToBinaryData(filename):
 	#Convert digital data to binary format
@@ -30,7 +30,6 @@ def index():
 
 @app.route('/capture', methods=['POST', 'GET'])
 def capture():
-	print("ok")
 	model = request.values.get("style").split(".")[0] + ".t7"
 	image = request.files["image"]
 	try:
@@ -49,7 +48,6 @@ def capture():
 		data = io.BytesIO()
 		image.save(data, "JPEG")
 		image = base64.b64encode(data.getvalue())
-		print("done")
 		return jsonify({'status': True, 'image': image.decode('utf-8')})
 	except Exception as e:
 		print(e)
@@ -62,4 +60,4 @@ def capture():
 if __name__ == "__main__":
 	# app.run(debug=False)
 	# app.run(debug=True)
-	app.run(host='192.168.0.106', port=5000 , debug=True)
+	app.run(debug=True)

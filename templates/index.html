@@ -49,6 +49,7 @@ $(function() {
                 processData: false,
                 success: function(result) {
                 	document.getElementById("download").style.display = "block";
+                    document.getElementById("imagebox").style.display = "block";
                     document.getElementById('imagebox').src = 'data:image/png;base64,'+result['image'];
                     document.getElementById("download").href= "data:image/png;base64,"+result['image'];
                 },
@@ -84,8 +85,8 @@ $(function() {
 		<hr>
         <div class="row p-4">
             <div class="col-sm-6">
-	        	<a class="btn btn-primary" download="image.png" href="" id="download" style="display: none;">Download</a>
-                <img id="imagebox" src="" alt="Output" class="col-sm-12 img-fluid mt-4 mb-4">
+	        	<a class="btn btn-primary" download="image.png" href="" id="download" style="display: none">Download</a>
+                <img id="imagebox" src="" alt="Output" class="col-sm-12 img-fluid mt-4 mb-4" style="display: none">
 
             </div>
             <div class="col-sm-6">
@@ -113,7 +114,7 @@ $(function() {
                         <input type="radio" class="btn-check" required name="style" id="" value="{{image}}" autocomplete="off" checked="">
 
                         <img class="col-sm-4" src='static/images/{{image}}'/>
-                    </label>
+                    </label> -->
                         <!-- <input type="radio" name="style" id="" value="{{image}}"> -->
                             <!-- {{image.split(".")[0]}} -->
                             <!-- <img src='static/images/{{image}}'/> -->
