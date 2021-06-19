@@ -6,7 +6,34 @@
 
 <script>
 $(function() {
-    $('#sendbutton').click(function(e) {
+    // $('#sendbutton').click(function(e) {
+    // 	e.preventDefault();
+    // 	if( document.getElementById("imageinput").files.length != 0 ){
+    //         var checkRadio = document.querySelector('input[name="style"]:checked');
+    //         if(checkRadio != null){
+    	
+    //         var form_data = new FormData($('#upload-file')[0]);
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: '/capture',
+    //             data: form_data,
+    //             contentType: false,
+    //             cache: false,
+    //             processData: false,
+    //             success: function(result) {
+    //             	document.getElementById("download").style.display = "block";
+    //                 document.getElementById('imagebox').src = 'data:image/png;base64,'+result['image'];
+    //                 document.getElementById("download").href= "data:image/png;base64,"+result['image'];
+    //             },
+    //             error: function(result) {
+    //             	console.log("error")
+    //             }
+    //         });
+    //     }
+    // }
+    // });
+
+    $('.style').change(function(e) {
     	e.preventDefault();
     	if( document.getElementById("imageinput").files.length != 0 ){
             var checkRadio = document.querySelector('input[name="style"]:checked');
@@ -33,25 +60,76 @@ $(function() {
     }
     });
 });
-</script>
+</script> 
 {% endblock %}
 
 {% block body %}
 
-<div class="box">
+<div class="jumbotron p-5">   
+    
+   
+<!-- <div class="p-5"> -->
 	<form id="upload-file" method="post" enctype="multipart/form-data">
-		<input id="imageinput" type="file" name="image">
-		<button name="send" id = "sendbutton">Send</button>
+        <fieldset>
+            <legend>Filters</legend>
+           
+            <div class="form-group">
+                <label for="formFile" class="form-label mt-4">Upload Image</label>
+                <!-- <input class="form-control" type="file" id="formFile"> -->
+                <input  class="form-control" id="imageinput" type="file" name="image">
+                <small class="text-muted"> After Uploading an image select one filter. </small>
+            </div>
+		
+		    <!-- <button class="btn btn-primary" name="send" id = "sendbutton">Send</button> -->
 		<hr>
-		<img id="imagebox" src="">
-		<a download="image.png" href="" id="download" style="display: none;">Download</a>
-        {% for image in modelImages %}
-            <input type="radio" name="style" id="" value="{{image}}">
-                {{image.split(".")[0]}}
-                <img src='static/images/{{image}}'/>
-                <br>
-            </input>
-        {% endfor %}
+        <div class="row p-4">
+            <div class="col-sm-6">
+	        	<a class="btn btn-primary" download="image.png" href="" id="download" style="display: none;">Download</a>
+                <img id="imagebox" src="" alt="Output" class="col-sm-12 img-fluid mt-4 mb-4">
+
+            </div>
+            <div class="col-sm-6">
+
+                <div class="row">
+                    {% for image in modelImages : %}
+                   
+                        <div class="form-check col-sm-4">
+                          <label class="form-check-label">
+                              <input type="radio" class="form-check-input style" required name="style" id="style{{img}}" value="{{image}}">
+                              {{imge}}<img class="col-12" style="height: 200px;" src="static/images/{{image}}" alt="{{img}}">
+                          </label>
+                        </div>                                              
+                    {% endfor %}
+                </div>
+
+                <!-- <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+
+                    
+                
+
+                    {% for image in modelImages %}
+
+                    <label class="btn btn-outline-primary" for="style"> 
+                        <input type="radio" class="btn-check" required name="style" id="" value="{{image}}" autocomplete="off" checked="">
+
+                        <img class="col-sm-4" src='static/images/{{image}}'/>
+                    </label>
+                        <!-- <input type="radio" name="style" id="" value="{{image}}"> -->
+                            <!-- {{image.split(".")[0]}} -->
+                            <!-- <img src='static/images/{{image}}'/> -->
+                            <!-- <br> --
+                        </input>
+                    {% endfor %}
+
+                </div> -->
+            </div>
+        </div>
+		
+       
+        </fieldset>
 	</form>
+<!-- </div> -->
+
+
 </div>
 {% endblock %}
